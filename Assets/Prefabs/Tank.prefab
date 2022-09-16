@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 669074503068942059}
   - component: {fileID: 669074503068942061}
   - component: {fileID: 3620959107212108355}
+  - component: {fileID: 4680555121999737491}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Player
@@ -229,7 +230,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!114 &669074503068942061
 MonoBehaviour:
@@ -267,6 +268,27 @@ MonoBehaviour:
   rocketCooldown: 3
   rocketFiringParticles: {fileID: 6728238218559888398, guid: e901fdef67520bc4fb33ad7ec19ca146, type: 3}
   rocketFiringSound: {fileID: 8300000, guid: f9e10474fee631e449e1f0d07cc044c5, type: 3}
+--- !u!114 &4680555121999737491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669074503068942056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b566b8058de60c409376bd31bb24a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 5
+  artMeshRenderers:
+  - {fileID: 669074502928736609}
+  - {fileID: 669074503769786193}
+  - {fileID: 669074502839013876}
+  - {fileID: 669074503108547941}
+  hurtSound: {fileID: 0}
+  killParticles: {fileID: 0}
+  killSound: {fileID: 0}
 --- !u!1 &669074503108547939
 GameObject:
   m_ObjectHideFlags: 0

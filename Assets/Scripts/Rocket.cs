@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour {
 
+    [SerializeField] private int damage;
     [SerializeField] private float speed;
     [SerializeField] private int timeout;
 
@@ -28,16 +29,21 @@ public class Rocket : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
+        //do nothing if it hits the player
         if(other.gameObject.CompareTag("Player")) {
-            Debug.Log("rocket hit player");
             return;
         }
-        Debug.Log("rocket hit something");
+
         //spawn explosion particles
         Instantiate(explosionParticles, transform.position, explosionParticles.transform.rotation);
         //play sound effect
         AudioHelper.PlayClip2D(explosionSound, 1);
-        //TODO: add functionality for when the rocket hits the boss
+
+        //attempt to damage whatever it hits
+        IDamageable damageableHit = other.GetComponent<IDamageable>();
+        damageableHit?.TakeDamage(damage);
+
+        //destroy the rocket
         Destroy(gameObject);
     }
 }
