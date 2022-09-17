@@ -177,7 +177,6 @@ GameObject:
   - component: {fileID: 669074503068942058}
   - component: {fileID: 669074503068942057}
   - component: {fileID: 669074503068942059}
-  - component: {fileID: 669074503068942061}
   - component: {fileID: 3620959107212108355}
   - component: {fileID: 4680555121999737491}
   m_Layer: 0
@@ -230,24 +229,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 84
+  m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &669074503068942061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669074503068942056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bbed72bd9d30bb4d9585b6dfa4c17b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 3
-  tankBodyPart: {fileID: 0}
-  tankBodyMaterial: {fileID: 0}
-  invincibilityMaterial: {fileID: 0}
 --- !u!114 &3620959107212108355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,7 +248,7 @@ MonoBehaviour:
   turretPivot: {fileID: 4588340536215068744}
   rocketSpawnPoint: {fileID: 1358506229319041863}
   rocketPrefab: {fileID: 3982167950886326834, guid: 462a33c0497a028439f7155a98020982, type: 3}
-  rocketCooldown: 3
+  rocketCooldown: 1
   rocketFiringParticles: {fileID: 6728238218559888398, guid: e901fdef67520bc4fb33ad7ec19ca146, type: 3}
   rocketFiringSound: {fileID: 8300000, guid: f9e10474fee631e449e1f0d07cc044c5, type: 3}
 --- !u!114 &4680555121999737491
@@ -281,14 +264,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
+  objectCollider: {fileID: 669074503068942057}
   artMeshRenderers:
   - {fileID: 669074502928736609}
   - {fileID: 669074503769786193}
   - {fileID: 669074502839013876}
   - {fileID: 669074503108547941}
-  hurtSound: {fileID: 0}
-  killParticles: {fileID: 0}
-  killSound: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: 70db9c75e29751f48a02688b896ff17b, type: 3}
+  killParticles: {fileID: 1349443669035626500, guid: ac7f1e8deb46d7f41a98da27210cb74f, type: 3}
+  killSound: {fileID: 8300000, guid: b1ceb666281b17f41a45c8b2497d6e96, type: 3}
 --- !u!1 &669074503108547939
 GameObject:
   m_ObjectHideFlags: 0

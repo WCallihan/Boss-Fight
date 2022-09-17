@@ -6,6 +6,7 @@ using UnityEngine;
 public class Health : MonoBehaviour, IDamageable {
 
     [SerializeField] private int maxHealth;
+    [SerializeField] private Collider objectCollider;
     [SerializeField] private List<MeshRenderer> artMeshRenderers;
     [SerializeField] private AudioClip hurtSound;
     [SerializeField] private ParticleSystem killParticles;
@@ -48,7 +49,9 @@ public class Health : MonoBehaviour, IDamageable {
         Debug.Log($"{gameObject.name} has died");
         //spawn kill particles
         Instantiate(killParticles, gameObject.transform);
-        //turn off art
+
+        //turn off art and collider
+        objectCollider.enabled = false;
         foreach(MeshRenderer r in artMeshRenderers) {
             r.enabled = false;
         }
