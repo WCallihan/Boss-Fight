@@ -127,5 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 818eaaab6dd1b0f4cb4a05856002089d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boss: {fileID: 8994690612321236473, guid: bbfa15b75ea94e242bb7cf94d568446d, type: 3}
   wallCollider: {fileID: 853156581196040838}
   artMeshRenderer: {fileID: 853156581196040839}

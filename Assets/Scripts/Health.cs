@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable {
 
-    [SerializeField] private int maxHealth;
+    public int MaxHealth;
     [SerializeField] private Collider objectCollider;
     [SerializeField] private List<MeshRenderer> artMeshRenderers;
     [SerializeField] private AudioClip hurtSound;
@@ -13,13 +13,19 @@ public class Health : MonoBehaviour, IDamageable {
     [SerializeField] private AudioClip killSound;
     private int currentHealth;
 
+    public event Action<int> TookDamage;
+
     private void Awake() {
-        currentHealth = maxHealth;
+        currentHealth = MaxHealth;
     }
 
     public void TakeDamage(int damage) {
+
         //apply damage
         currentHealth -= damage;
+
+        //invoke the event for anything listening
+        TookDamage?.Invoke(currentHealth);
 
         //play feedback
         StartCoroutine(HurtFlash());
@@ -46,7 +52,6 @@ public class Health : MonoBehaviour, IDamageable {
     }
 
     private void Kill() {
-        Debug.Log($"{gameObject.name} has died");
         //spawn kill particles
         Instantiate(killParticles, gameObject.transform);
 

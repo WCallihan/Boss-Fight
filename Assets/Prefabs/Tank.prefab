@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.25
-  turnSpeed: 2
+  turnSpeed: 4
   turretPivot: {fileID: 4588340536215068744}
   rocketSpawnPoint: {fileID: 1358506229319041863}
   rocketPrefab: {fileID: 3982167950886326834, guid: 462a33c0497a028439f7155a98020982, type: 3}
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b566b8058de60c409376bd31bb24a1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  MaxHealth: 5
   objectCollider: {fileID: 669074503068942057}
   artMeshRenderers:
   - {fileID: 669074502928736609}
