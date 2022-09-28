@@ -14,6 +14,7 @@ public class Health : MonoBehaviour, IDamageable {
     private int currentHealth;
 
     public event Action<int> TookDamage;
+    public event Action Died;
 
     private void Awake() {
         currentHealth = MaxHealth;
@@ -62,5 +63,8 @@ public class Health : MonoBehaviour, IDamageable {
         }
         //play kill sound
         AudioHelper.PlayClip2D(killSound, 1);
+
+        //invoke died event anything listening
+        Died?.Invoke();
     }
 }

@@ -6,7 +6,10 @@ public class CameraShake : MonoBehaviour {
 
     [SerializeField] private Health playerHealth;
     [SerializeField] private AnimationCurve curve;
-    [SerializeField] float shakeDuration;
+    [SerializeField] private float shakeDuration;
+
+    //FOR TESTING ONLY
+    [SerializeField] private bool shakeScreen;
 
     private void OnEnable() {
         playerHealth.TookDamage += StartShake;
@@ -16,8 +19,19 @@ public class CameraShake : MonoBehaviour {
         playerHealth.TookDamage -= StartShake;
     }
 
+    //FOR TESTING ONLY
+    private void Update()
+    {
+        if (shakeScreen)
+        {
+            shakeScreen = false;
+            StartCoroutine(Shake(1));
+        }
+    }
+
     private void StartShake(int damage) {
         StartCoroutine(Shake(damage));
+        Debug.Log("camera shake"); //FOR TESTING ONLY
     }
 
     private IEnumerator Shake(int damage) {

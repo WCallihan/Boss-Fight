@@ -20,12 +20,14 @@ public class BossController : MonoBehaviour {
     [SerializeField] private List<Transform> bossChargePositions;
     [SerializeField] private float chargeAttackColliderRadius;
     [SerializeField] private float chargeSpeed;
+    [SerializeField] private AudioClip chargingSound;
+    [SerializeField] private AudioClip dashingSound;
 
     //movement
     private Vector3 targetPatrolPosition;
     private Vector3 targetChargePosition;
     private float patrolTimer;
-    //use these as place holders for states that may come later
+    //use these as mini states
     private bool patroling;
     private bool reachedPatrolPosition;
     private bool reachedChargePosition;
@@ -120,6 +122,9 @@ public class BossController : MonoBehaviour {
         //invoke event for anything listening
         StartedChargeAttack?.Invoke();
 
+        //start playing the charging sound effect
+        AudioHelper.PlayClip2D(chargingSound, 1);
+
         //change the collider radius to be bigger over time
         CapsuleCollider collider = GetComponent<CapsuleCollider>();
         float originalColliderRadius = collider.radius;
@@ -130,6 +135,9 @@ public class BossController : MonoBehaviour {
             timer += Time.deltaTime;
             yield return null;
         }
+
+        //play the dashing sound effect
+        AudioHelper.PlayClip2D(dashingSound, 1);
 
         //move the boss rapidly down on the map
         Vector3 endOfCharge = transform.position + new Vector3(0, 0, -22);

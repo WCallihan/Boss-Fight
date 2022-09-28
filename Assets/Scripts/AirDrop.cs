@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class AirDrop : MonoBehaviour {
 
+    [Header("Settings")]
     [SerializeField] private int damage;
     [SerializeField] private float delayTime;
+
+    [Header("Feedback")]
     [SerializeField] private GameObject baseRadiusArt;
     [SerializeField] private GameObject timeIndicatorArt;
     [SerializeField] private GameObject explosionParticles;
+    [SerializeField] private AudioClip explosionSound;
 
     private float delayTimer;
     private Collider player = null;
@@ -30,6 +34,8 @@ public class AirDrop : MonoBehaviour {
             player?.GetComponent<IDamageable>().TakeDamage(damage);
             //spawn the explosion particles
             Instantiate(explosionParticles, transform.position, explosionParticles.transform.rotation);
+            //play the sound effect
+            AudioHelper.PlayClip2D(explosionSound, 0.5f);
             //destroy the air drop object
             Destroy(gameObject);
         }
