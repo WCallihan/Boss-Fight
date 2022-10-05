@@ -12,15 +12,18 @@ public class Health : MonoBehaviour, IDamageable {
     [SerializeField] private ParticleSystem killParticles;
     [SerializeField] private AudioClip killSound;
     private int currentHealth;
+    private bool dead;
 
     public event Action<int> TookDamage;
     public event Action Died;
 
     private void Awake() {
         currentHealth = MaxHealth;
+        dead = false;
     }
 
     public void TakeDamage(int damage) {
+        if (dead) return;
 
         //apply damage
         currentHealth -= damage;
@@ -66,5 +69,8 @@ public class Health : MonoBehaviour, IDamageable {
 
         //invoke died event anything listening
         Died?.Invoke();
+
+        //set dead flag
+        dead = true;
     }
 }

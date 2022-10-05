@@ -17,13 +17,12 @@ public class ScreenFlash : MonoBehaviour {
         playerHealth.TookDamage -= StartFlash;
     }
 
-    private void StartFlash(int damage) {
-        StartCoroutine(Flash(damage));
+    private void StartFlash(int currentHealth) {
+        StartCoroutine(Flash());
     }
 
-    private IEnumerator Flash(int damage) {
-        //0.1176471 == 30
-        float flashAlpha = 0.1176471f * damage; //IMPORTANT: this assumes that all received damage values are either 1 or 2
+    private IEnumerator Flash() {
+        float flashAlpha = 0.1176471f; //0.1176471 == 30
 
         //fade flash in
         float fadeTime = totalFlashTime / 2;
