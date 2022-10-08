@@ -35,7 +35,7 @@ public class AirDrop : MonoBehaviour {
             //spawn the explosion particles
             Instantiate(explosionParticles, transform.position, explosionParticles.transform.rotation);
             //play the sound effect
-            AudioHelper.PlayClip2D(explosionSound, 0.5f);
+            AudioHelper.PlayClip2D(explosionSound, 0.25f);
             //destroy the air drop object
             Destroy(gameObject);
         }

@@ -265,8 +265,9 @@ MonoBehaviour:
   upperPatrolBound: 10
   patrolLength: 15
   touchingBossDamage: 2
+  player: {fileID: 0}
   airDropPrefab: {fileID: 6857401228531769698, guid: ea74ea08708de39409955efba08e994d, type: 3}
-  airDropAttackCooldown: 0.5
+  airDropAttackCooldown: 1
   bossChargePositions:
   - {fileID: 0}
   - {fileID: 0}
@@ -287,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b566b8058de60c409376bd31bb24a1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 15
+  MaxHealth: 10
   objectCollider: {fileID: 8994690612321236421}
   artMeshRenderers:
   - {fileID: 8994690612304138898}

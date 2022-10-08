@@ -15,6 +15,7 @@ public class BossController : MonoBehaviour {
 
     [Header("Attacks")]
     [SerializeField] private int touchingBossDamage;
+    [SerializeField] private GameObject player;
     [SerializeField] private GameObject airDropPrefab;
     [SerializeField] private float airDropAttackCooldown;
     [SerializeField] private List<Transform> bossChargePositions;
@@ -31,21 +32,33 @@ public class BossController : MonoBehaviour {
     private bool patroling;
     private bool reachedPatrolPosition;
     private bool reachedChargePosition;
+    private bool dead;
 
     //attacks
     private float airDropTimer;
     public event Action StartedChargeAttack;
     public event Action EndedChargeAttack;
 
+    private void OnEnable() {
+        GetComponent<Health>().Died += SetDead;
+    }
+
+    private void OnDisable() {
+        GetComponent<Health>().Died -= SetDead;
+    }
+
     private void Awake() {
         patroling = true;
         patrolTimer = patrolLength;
         reachedPatrolPosition = true; //start true to generate an initial position
+        dead = false;
 
         airDropTimer = 0;
     }
 
     private void Update() {
+        if(dead) return;
+
         if(patroling) {
             //walk around to a random spot on the map
 
@@ -107,12 +120,9 @@ public class BossController : MonoBehaviour {
     private void AirDropAttack() {
         //check if the cooldown is done
         if(airDropTimer <= 0) {
-            //choose random spot within the map
-            float randX = UnityEngine.Random.Range(leftPatrolBound, rightPatrolBound);
-            float randZ = UnityEngine.Random.Range(lowerPatrolBound, upperPatrolBound);
-            Vector3 airDropPosition = new Vector3(randX, 0, randZ);
-            //spawn an air drop attack prefab
-            Instantiate(airDropPrefab, airDropPosition, airDropPrefab.transform.rotation);
+            //spawn an air drop attack prefab on the player
+            Vector3 airDropPoint = new Vector3(player.transform.position.x, 0, player.transform.position.z);
+            Instantiate(airDropPrefab, airDropPoint, airDropPrefab.transform.rotation);
             //reset the timer
             airDropTimer = airDropAttackCooldown;
         }
@@ -167,5 +177,9 @@ public class BossController : MonoBehaviour {
     private void OnCollisionEnter(Collision collision) {
         IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
         damageable?.TakeDamage(touchingBossDamage);
+    }
+
+    private void SetDead() {
+        dead = true;
     }
 }
