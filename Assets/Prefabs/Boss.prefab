@@ -273,6 +273,8 @@ MonoBehaviour:
   - {fileID: 0}
   chargeAttackColliderRadius: 3.5
   chargeSpeed: 60
+  chargingPrepSound: {fileID: 8300000, guid: 0c587871fb4320b4eb9597b77961cd09, type: 3}
+  chargingSound: {fileID: 8300000, guid: 00adf6cba687a8c4f99d450129ebad6e, type: 3}
 --- !u!114 &8994690612321236422
 MonoBehaviour:
   m_ObjectHideFlags: 0
