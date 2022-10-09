@@ -5,20 +5,22 @@ using UnityEngine;
 public class BossHitboxIndicator : MonoBehaviour {
 
     [SerializeField] private CapsuleCollider bossCollider;
+    BossChargeAttack chargeAttack;
     private bool visible;
 
     private void Awake() {
         HideIndicator();
+        chargeAttack = bossCollider.gameObject.GetComponent<BossChargeAttack>();
     }
 
     private void OnEnable() {
-        bossCollider.gameObject.GetComponent<BossController>().StartedChargeAttack += ShowIndicator;
-        bossCollider.gameObject.GetComponent<BossController>().EndedChargeAttack += HideIndicator;
+        chargeAttack.StartedChargeAttack += ShowIndicator;
+        chargeAttack.EndedChargeAttack += HideIndicator;
     }
 
     private void OnDisable() {
-        bossCollider.gameObject.GetComponent<BossController>().StartedChargeAttack -= ShowIndicator;
-        bossCollider.gameObject.GetComponent<BossController>().EndedChargeAttack -= HideIndicator;
+        chargeAttack.StartedChargeAttack -= ShowIndicator;
+        chargeAttack.EndedChargeAttack -= HideIndicator;
     }
 
     private void Update() {

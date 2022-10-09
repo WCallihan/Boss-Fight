@@ -192,6 +192,8 @@ GameObject:
   - component: {fileID: 8994690612321236420}
   - component: {fileID: 8994690612321236421}
   - component: {fileID: 8994690612321236473}
+  - component: {fileID: 5400516652017854130}
+  - component: {fileID: 758320926354439808}
   - component: {fileID: 8994690612321236422}
   m_Layer: 0
   m_Name: Boss
@@ -263,17 +265,44 @@ MonoBehaviour:
   rightPatrolBound: 10
   lowerPatrolBound: -10
   upperPatrolBound: 10
-  patrolLength: 15
+  patrolLength: 10
   touchingBossDamage: 2
-  player: {fileID: 0}
-  airDropPrefab: {fileID: 6857401228531769698, guid: ea74ea08708de39409955efba08e994d, type: 3}
-  airDropAttackCooldown: 1
+  airDropAttack: {fileID: 5400516652017854130}
+  chargeAttack: {fileID: 758320926354439808}
   bossChargePositions:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  chargeAttackColliderRadius: 3.5
-  chargeSpeed: 60
+--- !u!114 &5400516652017854130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8994690612321236418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1cfaf8a561bd4e4b849575fb1d99d5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  airDropPrefab: {fileID: 6857401228531769698, guid: ea74ea08708de39409955efba08e994d, type: 3}
+  dropAreaRadius: 5
+  airDropAttackCooldown: 0.75
+--- !u!114 &758320926354439808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8994690612321236418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c8b558cc5ce94b439c25f3b652f5145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chargeAttackColliderRadius: 2
+  chargeSpeed: 50
   chargingPrepSound: {fileID: 8300000, guid: 0c587871fb4320b4eb9597b77961cd09, type: 3}
   chargingSound: {fileID: 8300000, guid: 00adf6cba687a8c4f99d450129ebad6e, type: 3}
 --- !u!114 &8994690612321236422

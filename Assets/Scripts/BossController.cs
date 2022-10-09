@@ -15,14 +15,9 @@ public class BossController : MonoBehaviour {
 
     [Header("Attacks")]
     [SerializeField] private int touchingBossDamage;
-    [SerializeField] private GameObject player;
-    [SerializeField] private GameObject airDropPrefab;
-    [SerializeField] private float airDropAttackCooldown;
+    [SerializeField] private BossAirDropAttack airDropAttack;
+    [SerializeField] private BossChargeAttack chargeAttack;
     [SerializeField] private List<Transform> bossChargePositions;
-    [SerializeField] private float chargeAttackColliderRadius;
-    [SerializeField] private float chargeSpeed;
-    [SerializeField] private AudioClip chargingPrepSound;
-    [SerializeField] private AudioClip chargingSound;
 
     //movement
     private Vector3 targetPatrolPosition;
@@ -34,26 +29,22 @@ public class BossController : MonoBehaviour {
     private bool reachedChargePosition;
     private bool dead;
 
-    //attacks
-    private float airDropTimer;
-    public event Action StartedChargeAttack;
-    public event Action EndedChargeAttack;
-
     private void OnEnable() {
         GetComponent<Health>().Died += SetDead;
+        chargeAttack.EndedChargeAttack += StartPatrolling;
     }
 
     private void OnDisable() {
         GetComponent<Health>().Died -= SetDead;
+        chargeAttack.EndedChargeAttack -= StartPatrolling;
     }
 
     private void Awake() {
-        patroling = true;
-        patrolTimer = patrolLength;
-        reachedPatrolPosition = true; //start true to generate an initial position
         dead = false;
+    }
 
-        airDropTimer = 0;
+    private void Start() {
+        StartPatrolling();
     }
 
     private void Update() {
@@ -66,20 +57,13 @@ public class BossController : MonoBehaviour {
             if(reachedPatrolPosition) {
 
                 reachedPatrolPosition = false;
-
-                float randX = UnityEngine.Random.Range(leftPatrolBound, rightPatrolBound);
-                float randZ = UnityEngine.Random.Range(lowerPatrolBound, upperPatrolBound);
-                targetPatrolPosition = new Vector3(randX, transform.position.y, randZ);
+                SetPatrolPoint();
             }
 
             //move towards target position
             transform.position = Vector3.MoveTowards(transform.position, targetPatrolPosition, speed * Time.deltaTime);
             //update patroling timer
             patrolTimer -= Time.deltaTime;
-
-            //passive attack
-            airDropTimer -= Time.deltaTime;
-            AirDropAttack();
 
             //if the spot has now been reached, set the flag
             if(Vector3.Distance(transform.position, targetPatrolPosition) <= 0.5f) {
@@ -88,8 +72,9 @@ public class BossController : MonoBehaviour {
 
                 //check if the patrol timer is up
                 if(patrolTimer <= 0) {
-
+                    //stop patrolling
                     patroling = false;
+                    airDropAttack.SetActive(false);
 
                     //pick one of the charge positions
                     int randIndex = UnityEngine.Random.Range(0, bossChargePositions.Count - 1);
@@ -111,67 +96,24 @@ public class BossController : MonoBehaviour {
                     //set flag
                     reachedChargePosition = true;
                     //charge attack
-                    StartCoroutine(ChargeAttack());
+                    StartCoroutine(chargeAttack.ChargeAttack());
                 }
             }
         }
     }
 
-    private void AirDropAttack() {
-        //check if the cooldown is done
-        if(airDropTimer <= 0) {
-            //spawn an air drop attack prefab on the player
-            Vector3 airDropPoint = new Vector3(player.transform.position.x, 0, player.transform.position.z);
-            Instantiate(airDropPrefab, airDropPoint, airDropPrefab.transform.rotation);
-            //reset the timer
-            airDropTimer = airDropAttackCooldown;
-        }
-    }
-
-    private IEnumerator ChargeAttack() {
-        //invoke event for anything listening
-        StartedChargeAttack?.Invoke();
-
-        //start playing the charging sound effect
-        AudioHelper.PlayClip2D(chargingPrepSound, 1);
-
-        //change the collider radius to be bigger over time
-        CapsuleCollider collider = GetComponent<CapsuleCollider>();
-        float originalColliderRadius = collider.radius;
-        float totalTime = 2f;
-        float timer = 0;
-        while(timer < totalTime) {
-            collider.radius = Mathf.Lerp(originalColliderRadius, chargeAttackColliderRadius, timer / totalTime);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        //play the dashing sound effect
-        AudioHelper.PlayClip2D(chargingSound, 1);
-
-        //move the boss rapidly down on the map
-        Vector3 endOfCharge = transform.position + new Vector3(0, 0, -22);
-        while (Vector3.Distance(transform.position, endOfCharge) > 0.5) {
-            transform.position = Vector3.MoveTowards(transform.position, endOfCharge, chargeSpeed * Time.deltaTime);
-            yield return null;
-        }
-
-        //change the collider radius back to normal over time
-        totalTime = 1f;
-        timer = 0;
-        while(timer < totalTime) {
-            collider.radius = Mathf.Lerp(chargeAttackColliderRadius, originalColliderRadius, timer / totalTime);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        //invoke event for anything listening
-        EndedChargeAttack?.Invoke();
-
-        //go back to patroling
+    private void StartPatrolling() {
         patroling = true;
         patrolTimer = patrolLength;
         reachedPatrolPosition = false;
+        SetPatrolPoint();
+        airDropAttack.SetActive(true);
+    }
+
+    private void SetPatrolPoint() {
+        float randX = UnityEngine.Random.Range(leftPatrolBound, rightPatrolBound);
+        float randZ = UnityEngine.Random.Range(lowerPatrolBound, upperPatrolBound);
+        targetPatrolPosition = new Vector3(randX, transform.position.y, randZ);
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -181,5 +123,6 @@ public class BossController : MonoBehaviour {
 
     private void SetDead() {
         dead = true;
+        airDropAttack.SetActive(false);
     }
 }

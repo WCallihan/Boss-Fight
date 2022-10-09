@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DestructibleWall : MonoBehaviour, IDamageable {
 
-    [SerializeField] private BossController boss;
+    [SerializeField] private BossChargeAttack bossChargeAttack;
     [SerializeField] private Collider wallCollider;
     [SerializeField] private MeshRenderer artMeshRenderer;
 
@@ -13,13 +13,13 @@ public class DestructibleWall : MonoBehaviour, IDamageable {
     }
 
     private void OnEnable() {
-        boss.StartedChargeAttack += ShowWall;
-        boss.EndedChargeAttack += HideWall;
+        bossChargeAttack.StartedChargeAttack += ShowWall;
+        bossChargeAttack.EndedChargeAttack += HideWall;
     }
 
     private void OnDisable() {
-        boss.StartedChargeAttack -= ShowWall;
-        boss.EndedChargeAttack -= HideWall;
+        bossChargeAttack.StartedChargeAttack -= ShowWall;
+        bossChargeAttack.EndedChargeAttack -= HideWall;
     }
 
     public void TakeDamage(int damage) {

@@ -27,7 +27,7 @@ public class CameraShake : MonoBehaviour {
         //shake camera for duration
         float timer = 0;
         while(timer < shakeDuration) {
-            //get the strength of the shake from the curve and how much damage was taken
+            //get the strength of the shake from the curve
             float strength = curve.Evaluate(timer / shakeDuration);
             transform.position = startPosition + Random.insideUnitSphere * strength;
             timer += Time.deltaTime;
